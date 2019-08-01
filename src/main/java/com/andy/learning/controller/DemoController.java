@@ -10,16 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/demo/")
+@RequestMapping("/user")
 public class DemoController {
 
-    @RequestMapping(value = "hello", method = RequestMethod.GET)
-    public List<String> hello() {
-        List<String> result = new ArrayList<>();
-        result.add("aaa");
-        result.add("bbb");
-        result.add("ccc");
-        return result;
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public Result hello() {
+       return Result.success("");
     }
 
 }
