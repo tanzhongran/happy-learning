@@ -1,4 +1,4 @@
-package com.andy.learning.controller;
+package com.andy.learning.infrastructure.Util;
 
 public class Result<T> {
 
@@ -21,15 +21,16 @@ public class Result<T> {
         return new Result<T>(data);
     }
 
-//    /**
-//     * 失败时候的调用
-//     * @param codeMsg codeMsg
-//     * @param <T> t
-//     * @return Result
-//     */
-//    public static <T> Result<T> error(CodeMsg codeMsg){
-//        return new Result<T>(codeMsg);
-//    }
+    /**
+     * 失败时候的调用
+     * @param code
+     * @param msg
+     * @param <T>
+     * @return
+     */
+    public static <T> Result<T> error(int code,String msg){
+        return new Result<T>(code,msg);
+    }
 
     /**
      * 成功的构造函数
@@ -45,17 +46,6 @@ public class Result<T> {
         this.code = code;
         this.msg = msg;
     }
-
-//    /**
-//     * 失败的构造函数
-//     * @param codeMsg codeMsg
-//     */
-//    private Result(CodeMsg codeMsg) {
-//        if(codeMsg != null) {
-//            this.code = codeMsg.getCode();
-//            this.msg = codeMsg.getMsg();
-//        }
-//    }
 
     public int getCode() {
         return code;
