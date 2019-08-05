@@ -15,7 +15,7 @@ public class CourseServiceImpl implements CourseService {
     private CourseDomain courseDomain;
 
     @Override
-    public List<TCourse> getCourseList() {
-        return courseDomain.getCourseList();
+    public List<TCourse> getCourseList(String supCode) throws Exception{
+        return courseDomain.getCourseList(supCode);
     }
 }

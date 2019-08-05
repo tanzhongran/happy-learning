@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface CourseDomain {
 
-    public List<TCourse> getCourseList();
+    public List<TCourse> getCourseList(String supCode);
 
 }

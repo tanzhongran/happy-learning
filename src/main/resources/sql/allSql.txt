@@ -1,0 +1,29 @@
+-- 课程信息
+drop table if exists T_COURSE;
+create table T_COURSE
+(
+	ID 					 int auto_increment primary key,
+	SUP_CODE		 	 VARCHAR(20) COMMENT '机构CODE',
+	COURSE_NAME			 VARCHAR(60) COMMENT '课程名称',
+	ENABLE_TAG			 CHAR(1) DEFAULT '1' COMMENT '开启标签 1:开启 2：关闭',
+	REMARK               varchar(300),
+	STATUS               varchar(1) default '1',
+	CREATE_TIME          datetime,
+	UPDATE_TIME          datetime
+)
+engine = InnoDB COMMENT='课程信息';
+
+-- 用户信息
+drop table if exists T_MEMBER;
+create table T_MEMBER
+(
+	ID 					 int auto_increment primary key,
+	SUP_CODE		 	 VARCHAR(20) COMMENT '机构CODE',
+	NAME			 	 VARCHAR(45) COMMENT '姓名',
+	MOBILE				 VARCHAR(20) COMMENT '手机',
+	PASS_WORD			 varchar(40) COMMENT '密码',
+	STATUS               varchar(1) default '1',
+	CREATE_TIME          datetime,
+	UPDATE_TIME          datetime
+)
+engine = InnoDB COMMENT='用户信息';

@@ -4,6 +4,8 @@ public class Result<T> {
 
     private int code;// 业务自定义状态码
 
+    private String msgCode;
+
     private String msg;// 请求状态描述，调试用
 
     private T data;// 请求数据，对象或数组均可
@@ -23,13 +25,13 @@ public class Result<T> {
 
     /**
      * 失败时候的调用
-     * @param code
+     * @param msgCode
      * @param msg
      * @param <T>
      * @return
      */
-    public static <T> Result<T> error(int code,String msg){
-        return new Result<T>(code,msg);
+    public static <T> Result<T> error(String msgCode,String msg){
+        return new Result<T>(msgCode,msg);
     }
 
     /**
@@ -39,11 +41,13 @@ public class Result<T> {
     public Result(T data){
         this.code = 20000;//默认200是成功
         this.msg = "SUCCESS";
+        this.msgCode = "";
         this.data = data;
     }
 
-    public Result(int code, String msg) {
-        this.code = code;
+    public Result(String msgCode, String msg) {
+        this.code = 50000;
+        this.msgCode = msgCode;
         this.msg = msg;
     }
 
@@ -78,5 +82,13 @@ public class Result<T> {
                 ", msg='" + msg + '\'' +
                 ", data=" + data +
                 '}';
+    }
+
+    public String getMsgCode() {
+        return msgCode;
+    }
+
+    public void setMsgCode(String msgCode) {
+        this.msgCode = msgCode;
     }
 }

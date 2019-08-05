@@ -1,4 +1,3 @@
-
 package com.andy.learning.domain.entity;
 
 import javax.persistence.Entity;
@@ -7,15 +6,15 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "T_COURSE")
-public class TCourse implements Serializable {
+@Table(name = "T_MEMBER")
+public class TMember implements Serializable {
 
     @Id
     private long id;
     private String supCode;
-    private String courseName;
-    private String enableTag;
-    private String remark;
+    private String name;
+    private String mobile;
+    private String passWord;
     private String status;
     private java.sql.Timestamp createTime;
     private java.sql.Timestamp updateTime;
@@ -39,30 +38,30 @@ public class TCourse implements Serializable {
     }
 
 
-    public String getCourseName() {
-        return courseName;
+    public String getName() {
+        return name;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-
-    public String getEnableTag() {
-        return enableTag;
-    }
-
-    public void setEnableTag(String enableTag) {
-        this.enableTag = enableTag;
+    public void setName(String name) {
+        this.name = name;
     }
 
 
-    public String getRemark() {
-        return remark;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+
+    public String getPassWord() {
+        return passWord;
+    }
+
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
     }
 
 
@@ -92,5 +91,13 @@ public class TCourse implements Serializable {
         this.updateTime = updateTime;
     }
 
-
+    @Override
+    public String toString() {
+        return "TMember{" +
+                "id=" + id +
+                ", supCode='" + supCode + '\'' +
+                ", name='" + name + '\'' +
+                ", mobile='" + mobile + '\'' +
+                '}';
+    }
 }
