@@ -14,16 +14,19 @@ create table T_COURSE
 engine = InnoDB COMMENT='课程信息';
 
 -- 用户信息
-drop table if exists T_MEMBER;
-create table T_MEMBER
+drop table if exists T_USER;
+create table T_USER
 (
 	ID 					 int auto_increment primary key,
 	SUP_CODE		 	 VARCHAR(20) COMMENT '机构CODE',
-	NAME			 	 VARCHAR(45) COMMENT '姓名',
+	USERNAME			 VARCHAR(45) COMMENT '用户名',
+	PASSWORD			 varchar(40) COMMENT '密码',
 	MOBILE				 VARCHAR(20) COMMENT '手机',
-	PASS_WORD			 varchar(40) COMMENT '密码',
+	AVATAR				 varchar(300) COMMENT '头像',
 	STATUS               varchar(1) default '1',
 	CREATE_TIME          datetime,
 	UPDATE_TIME          datetime
 )
 engine = InnoDB COMMENT='用户信息';
+
+-- INSERT INTO T_USER (SUP_CODE,USERNAME,PASSWORD,MOBILE,AVATAR) VALUES ('YBSH001','admin','123456','13524289819','');

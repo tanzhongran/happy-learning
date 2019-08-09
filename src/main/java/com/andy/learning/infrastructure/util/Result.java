@@ -1,4 +1,4 @@
-package com.andy.learning.infrastructure.Util;
+package com.andy.learning.infrastructure.util;
 
 public class Result<T> {
 

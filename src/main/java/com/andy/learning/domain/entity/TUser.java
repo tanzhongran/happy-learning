@@ -6,15 +6,16 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "T_MEMBER")
-public class TMember implements Serializable {
+@Table(name = "T_USER")
+public class TUser implements Serializable {
 
     @Id
     private long id;
     private String supCode;
-    private String name;
+    private String username;
     private String mobile;
-    private String passWord;
+    private String password;
+    private String avatar;
     private String status;
     private java.sql.Timestamp createTime;
     private java.sql.Timestamp updateTime;
@@ -38,12 +39,12 @@ public class TMember implements Serializable {
     }
 
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 
@@ -56,12 +57,12 @@ public class TMember implements Serializable {
     }
 
 
-    public String getPassWord() {
-        return passWord;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 
@@ -93,11 +94,19 @@ public class TMember implements Serializable {
 
     @Override
     public String toString() {
-        return "TMember{" +
+        return "TUser{" +
                 "id=" + id +
                 ", supCode='" + supCode + '\'' +
-                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
                 ", mobile='" + mobile + '\'' +
                 '}';
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

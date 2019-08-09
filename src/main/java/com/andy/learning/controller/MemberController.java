@@ -1,35 +1,34 @@
 package com.andy.learning.controller;
 
 
-import com.andy.learning.domain.entity.TMember;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.andy.learning.domain.business.user.UserDomain;
+import com.andy.learning.domain.entity.TUser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/user")
 public class MemberController {
 
-    @RequestMapping("/login")
-    public TMember login(String loginName,String passWord,HttpServletRequest request) throws Exception{
-        TMember member;
-        HttpSession session = request.getSession();
-        if(session.getAttribute("member")==null){
-            member = new TMember();
-            member.setId(1);
-            member.setName("谈仲然");
-            session.setAttribute("member",member);
-            System.out.println("add new session");
-        }else{
-            member = (TMember)session.getAttribute("member");
-            System.out.println(member);
-        }
+    @Autowired
+    UserDomain memberDomain;
 
-        return member;
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    public Map<String,String> login(@RequestBody TUser user) throws Exception{
+        String token = memberDomain.login(user.getUsername(),user.getPassword());
+        System.out.println("token="+token);
+        Map map = new HashMap();
+        map.put("token",token);
+        return map;
+    }
 
-
+    @RequestMapping(value = "/info",method = RequestMethod.GET)
+    public TUser getUserInfo(String token) throws Exception{
+        TUser user = memberDomain.getTokenInfo(token);
+        return user;
     }
 
 }

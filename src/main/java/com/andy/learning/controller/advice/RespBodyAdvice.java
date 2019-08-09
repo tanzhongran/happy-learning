@@ -1,6 +1,6 @@
 package com.andy.learning.controller.advice;
 
-import com.andy.learning.infrastructure.Util.Result;
+import com.andy.learning.infrastructure.util.Result;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -22,10 +22,16 @@ public class RespBodyAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType,
          Class<? extends HttpMessageConverter<?>> aClass,ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
+        String methodName=methodParameter.getMethod().getName();
+
+//        if(methodName.equals("login")){
+//            return o;
+//        }
+
         if( o instanceof Result){
             return o;
-        }else{
-            return Result.success(o);
         }
+
+        return Result.success(o);
     }
 }

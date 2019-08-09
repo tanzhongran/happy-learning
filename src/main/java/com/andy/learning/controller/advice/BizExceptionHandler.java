@@ -1,7 +1,7 @@
 package com.andy.learning.controller.advice;
 
 import com.andy.learning.infrastructure.BizException;
-import com.andy.learning.infrastructure.Util.Result;
+import com.andy.learning.infrastructure.util.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
