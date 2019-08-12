@@ -1,9 +1,8 @@
 package com.andy.learning.domain.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "T_USER")
@@ -20,6 +19,8 @@ public class TUser implements Serializable {
     private java.sql.Timestamp createTime;
     private java.sql.Timestamp updateTime;
 
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "userId")
+    private List<TRole> roles;
 
     public long getId() {
         return id;
@@ -108,5 +109,13 @@ public class TUser implements Serializable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public List<TRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<TRole> roles) {
+        this.roles = roles;
     }
 }

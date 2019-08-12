@@ -4,6 +4,7 @@ import com.andy.learning.domain.business.user.UserDomain;
 import com.andy.learning.domain.entity.TUser;
 import com.andy.learning.domain.repository.UserRepository;
 import com.andy.learning.infrastructure.BizException;
+import com.andy.learning.infrastructure.token.Token;
 import com.andy.learning.infrastructure.token.TokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,6 @@ public class UserDomainImpl implements UserDomain {
         if(user==null){
             throw new BizException("","账户不存在");
         }
-
         //校验密码
         if(!password.equals(user.getPassword())){
             throw new BizException("","密码错误");
@@ -39,8 +39,14 @@ public class UserDomainImpl implements UserDomain {
     }
 
     @Override
-    public TUser getTokenInfo(String token){
-        return redisTokenManager.getUserInfoByToken(token);
+    public Token getTokenInfo(String token){
+        Token tokenBean = redisTokenManager.getUserInfoByToken(token);
+        return tokenBean;
+    }
+
+    @Override
+    public TUser getUserInfoById(long id) throws Exception {
+        return memberRepo.findTUserById(id);
     }
 
 

@@ -27,5 +27,5 @@ public interface TokenManager {
      * @param token
      * @return
      */
-    TUser getUserInfoByToken(String token);
+    Token getUserInfoByToken(String token);
 }

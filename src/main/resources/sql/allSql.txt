@@ -29,4 +29,36 @@ create table T_USER
 )
 engine = InnoDB COMMENT='用户信息';
 
+-- 用户角色
+drop table if exists T_ROLE;
+create table T_ROLE
+(
+	ID 					int auto_increment primary key,
+	USER_ID				int COMMENT '用户ID',
+	ROLE		 	 	VARCHAR(20) COMMENT '角色'
+)
+engine = InnoDB COMMENT='用户角色';
+
+
+
+
+
+
+
 -- INSERT INTO T_USER (SUP_CODE,USERNAME,PASSWORD,MOBILE,AVATAR) VALUES ('YBSH001','admin','123456','13524289819','');
+-- INSERT INTO t_role (ROLE,USER_ID)VALUES('admin',1);
+-- INSERT INTO t_role (ROLE,USER_ID)VALUES('editor',1);
+
+
+@OneToMany 复习总结
+@Transactional 后续学习
+
+filter完成并总结
+threadlocal保存token
+
+
+
+
+
+
+

@@ -9,4 +9,6 @@ public interface UserRepository extends JpaRepository<TUser,Long> {
 
     public TUser findTUserByUsername(String username);
 
+    public TUser findTUserById(long id);
+
 }
