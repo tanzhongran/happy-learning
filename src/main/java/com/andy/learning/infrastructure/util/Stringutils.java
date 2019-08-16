@@ -1,5 +1,7 @@
 package com.andy.learning.infrastructure.util;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class Stringutils {
 
     /**
@@ -13,6 +15,15 @@ public class Stringutils {
             ch[0] = (char) (ch[0] - 32);
         }
         return new String(ch);
+    }
+
+    /**
+     * 将pojo转化string
+     * @param obj
+     * @return
+     */
+    public static String toString(Object obj){
+        return ToStringBuilder.reflectionToString(obj);
     }
 
 }

@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface CourseDomain {
 
-    public List<TCourse> getCourseList(String supCode);
+    public void saveCourse(TCourse course) throws Exception;
+
+    public List<TCourse> getCourseList();
 
 }

@@ -28,4 +28,16 @@ public interface TokenManager {
      * @return
      */
     Token getUserInfoByToken(String token);
+
+    /**
+     * 获取本地线程的token
+     * @return
+     */
+    Token getLocalToken();
+
+    /**
+     * 往本地线程放入token
+     * @param token
+     */
+    void setLocalToken(Token token);
 }

@@ -20,8 +20,6 @@ public class UserDomainImpl implements UserDomain {
 
     @Override
     public String login(String username,String password) throws Exception {
-        //https://www.cnblogs.com/hongdada/p/9187981.html
-
         //查询账户名对应的登录信息
         TUser user = memberRepo.findTUserByUsername(username);
         if(user==null){

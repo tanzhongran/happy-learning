@@ -16,9 +16,13 @@ public class CourseController {
     @Autowired
     CourseService courseService;
 
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public void saveCourse(TCourse course) throws Exception{
+        courseService.saveCourse(course);
+    }
+
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<TCourse> getCourseList() throws Exception {
-        String supCode = "YBSH0001";
-        return courseService.getCourseList(supCode);
+        return courseService.getCourseList();
     }
 }

@@ -8,7 +8,6 @@ import java.util.List;
 
 @Repository
 public interface CourseRepository extends JpaRepository<TCourse,Long> {
-
     public List<TCourse> findTCoursesBySupCodeAndStatus(String supCode,String status);
 
 }

@@ -24,10 +24,6 @@ public class RespBodyAdvice implements ResponseBodyAdvice<Object> {
          Class<? extends HttpMessageConverter<?>> aClass,ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
         String methodName=methodParameter.getMethod().getName();
 
-//        if(methodName.equals("login")){
-//            return o;
-//        }
-
         if( o instanceof Result){
             return o;
         }

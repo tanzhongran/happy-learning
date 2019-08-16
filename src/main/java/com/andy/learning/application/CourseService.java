@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface CourseService {
 
-    public List<TCourse> getCourseList(String supCode) throws Exception;
+    public List<TCourse> getCourseList() throws Exception;
 
-
+    public void saveCourse(TCourse course)throws Exception;
 
 }

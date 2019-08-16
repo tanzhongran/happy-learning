@@ -24,6 +24,11 @@ public class RedisTokenManager implements TokenManager {
     private RedisUtil redisUtil;
 
     /**
+     * 放入本地线程的token
+     */
+    private static final ThreadLocal<Token> threadLocalToken = new ThreadLocal<Token>();
+
+    /**
      * token过期时间（秒）
      */
     private static final long tokenExpireTime=1800;
@@ -98,4 +103,23 @@ public class RedisTokenManager implements TokenManager {
         }
         return null;
     }
+
+
+    /**
+     * 获取本地线程的token
+     * @return
+     */
+    public Token getLocalToken(){
+        return threadLocalToken.get();
+    }
+
+    /**
+     * 往本地线程放入token
+     * @param token
+     */
+    public void setLocalToken(Token token){
+        threadLocalToken.set(token);
+    }
+
+
 }

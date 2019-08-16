@@ -2,19 +2,26 @@ package com.andy.learning.infrastructure.filter;
 
 
 import com.alibaba.fastjson.JSON;
+import com.andy.learning.infrastructure.token.Token;
+import com.andy.learning.infrastructure.token.TokenManager;
 import com.andy.learning.infrastructure.util.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /***************
@@ -23,65 +30,57 @@ import java.io.UnsupportedEncodingException;
  * @time 2017-08-01
  */
 @Component
-//@WebFilter(urlPatterns = { "/api/v/*" }, filterName = "tokenAuthorFilter")
+@WebFilter(urlPatterns = { "/*" }, filterName = "tokenAuthorFilter")
 public class TokenAuthorFilter implements Filter {
 
     private static Logger logger = LoggerFactory
             .getLogger(TokenAuthorFilter.class);
 
-    @Override
-    public void destroy() {
+    @Autowired
+    TokenManager redisTokenManager;
 
-    }
+    private static final Set<String> ALLOWED_PATHS = Collections.unmodifiableSet(new HashSet<>(
+            Arrays.asList("/user/login", "/user/register")));
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response,
-                         FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response,FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse rep = (HttpServletResponse) response;
 
-        //设置允许跨域的配置
-        // 这里填写你允许进行跨域的主机ip（正式上线时可以动态配置具体允许的域名和IP）
-        //rep.setHeader("Access-Control-Allow-Origin", "*");
-        // 允许的访问方法
+        //配置参数
         rep.setHeader("Access-Control-Allow-Methods","POST, GET, PUT, OPTIONS, DELETE, PATCH");
-        // Access-Control-Max-Age 用于 CORS 相关配置的缓存
-        //rep.setHeader("Access-Control-Max-Age", "3600");
-        //rep.setHeader("Access-Control-Allow-Headers","token,Origin, X-Requested-With, Content-Type, Accept");
-
-
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");
-        String token = req.getHeader("token");//header方式
-        Result result = null;
-        boolean isFilter = false;
 
-
-        String method = ((HttpServletRequest) request).getMethod();
-        if (method.equals("OPTIONS")) {
-            rep.setStatus(HttpServletResponse.SC_OK);
+        //获取基本信息
+        String token = req.getHeader("X-Token");//header方式
+        String path = req.getRequestURI().substring(req.getContextPath().length()).replaceAll("[/]+$", "");
+        //如果无需过滤则直接通过
+        if(ALLOWED_PATHS.contains(path)){
+            chain.doFilter(request,response);
         }else{
+            //校验token
+            Result failedResult = null;
             if (null == token || token.isEmpty()) {
-                result = new Result("","用户授权认证没有通过!客户端请求参数中无token信息");
+                failedResult = new Result("","用户授权认证没有通过!客户端请求参数中无token信息");
             } else {
-                if (TokenUtil.volidateToken(token)) {
-                    resultInfo.setCode();
-                    resultInfo.setMsg("");
-                    isFilter = true;
+                Token tokenBean = redisTokenManager.getUserInfoByToken(token);
+                if (tokenBean!=null) {
+                    //把tokenBean放入ThreadLocal
+                    redisTokenManager.setLocalToken(tokenBean);
                 } else {
-                    result = new Result("","用户授权认证没有通过!客户端请求参数token信息无效");
+                    failedResult = new Result("","用户授权认证没有通过!客户端请求参数token信息无效");
                 }
             }
-
-            // 验证失败则直接抛出结果
-            if (result.getCode() == 50000) {
+            //token验证失败则直接抛出结果
+            if (failedResult!=null) {
                 PrintWriter writer = null;
                 OutputStreamWriter osw = null;
                 try {
                     osw = new OutputStreamWriter(response.getOutputStream(),
                             "UTF-8");
                     writer = new PrintWriter(osw, true);
-                    String jsonStr = JSON.toJSONString(result);
+                    String jsonStr = JSON.toJSONString(failedResult);
                     writer.write(jsonStr);
                     writer.flush();
                     writer.close();
@@ -99,19 +98,20 @@ public class TokenAuthorFilter implements Filter {
                     }
                 }
                 return;
-            }
-
-            if (isFilter) {
-                logger.info("token filter过滤ok!");
+            }else{
+                //logger.info("token filter过滤ok!");
                 chain.doFilter(request, response);
             }
         }
-
-
     }
 
     @Override
     public void init(FilterConfig arg0) throws ServletException {
+
+    }
+
+    @Override
+    public void destroy() {
 
     }
 
